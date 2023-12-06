@@ -10,28 +10,37 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chat_models import ChatAnthropic
 from apikey import apikey
 
-llm = ChatOpenAI(openai_api_key=apikey)
-prompt = ChatPromptTemplate(
-    messages=[
-        SystemMessagePromptTemplate.from_template(
-            "You are a nice chatbot having a conversation with a human."
-        ),
-        # The `variable_name` here is what must align with memory
-        MessagesPlaceholder(variable_name="chat_history"),
-        HumanMessagePromptTemplate.from_template("{question}")
-    ]
-)
+def chat_model(input):
+    llm = ChatOpenAI(openai_api_key=apikey)
+    prompt = ChatPromptTemplate(
+        messages=[
+            SystemMessagePromptTemplate.from_template(
+                "You are a nice chatbot having a conversation with a human."
+            ),
+            MessagesPlaceholder(variable_name="chat_history"),
+            HumanMessagePromptTemplate.from_template("{question}")
+        ]
+    )
+    # m = langchain_memory._create_chat_memory()
+    memory = ConversationBufferMemory(
+        # chat_memory=m, 
+        memory_key="chat_history", 
+        return_messages=True
+    )
 
-memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-conversation = LLMChain(
-    llm=llm,
-    prompt=prompt,
-    verbose=True,
-    memory=memory
-)
-# history = conversation({"question": "hi"})
-for chunk in conversation.stream({"question": "hi"}):
-    print(chunk, end="", flush=True)
-print("\n")
-# for ele in history:
-#     print("key: {}".format(history["text"]))
+    conversation = LLMChain(
+        llm=llm,
+        prompt=prompt,
+        verbose=True,
+        memory=memory
+    )
+    conversation.predict(question="Hi there!")
+    print(conversation.predict(question="what did I just say"))
+    
+   
+    # for chunk in conversation.stream({"question": input}):
+    #     print(chunk, end="", flush=True)
+    # print("\n")
+    # for ele in history:
+    #     print("key: {}".format(history["text"]))
+chat_model("hi")
