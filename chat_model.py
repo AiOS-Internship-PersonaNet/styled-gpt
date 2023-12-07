@@ -8,7 +8,7 @@ from langchain.prompts import (
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 from langchain.chat_models import ChatAnthropic
-from apikey import apikey
+from server.apikey import apikey
 
 def chat_model(input):
     llm = ChatOpenAI(openai_api_key=apikey)
@@ -35,6 +35,7 @@ def chat_model(input):
         memory=memory
     )
     conversation.predict(question="Hi there!")
+    conversation.predict(question="how are you")
     print(conversation.predict(question="what did I just say"))
     
    
