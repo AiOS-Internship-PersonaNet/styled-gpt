@@ -45,7 +45,9 @@ def chain_route():
     def generate():
         for chunk in llm_chain.run(user_input):
             yield (chunk)
+    #return stream_with_context(llm_chain.run(user_input))
     return stream_with_context(generate())
+
 
 if __name__ == '__main__':
     app.run(debug=True)

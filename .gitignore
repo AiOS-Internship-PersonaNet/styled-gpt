@@ -1,4 +1,6 @@
-/apikey.py
+server/apikey.py
 /node_modules
 /package-lock.json
-/__pycache__
+/server/__pycache__
+/my-app/node_modules
+/my-app/package-lock.json
