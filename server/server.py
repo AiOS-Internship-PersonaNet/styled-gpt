@@ -41,10 +41,9 @@ parser.add_argument('query', type=str, required=True, location='json', help="Inp
 def chain_route():
     args = parser.parse_args()
     user_input = args['query']
-    chain_val = llm_chain.run(user_input)
     
     def generate():
-        for chunk in chain_val:
+        for chunk in llm_chain.run(user_input):
             yield (chunk)
     return stream_with_context(generate())
 
