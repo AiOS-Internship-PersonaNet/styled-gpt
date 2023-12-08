@@ -16,20 +16,22 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     };
-    const res = await fetch('/chain', settings);
-    for await (const chunk of res.body) {
-      setResponse(response + String.fromCharCode(chunk))
-      console.log(chunk);
-    }
-    // fetch('/chain', settings)
-    //   .then((response) => response.body)
-    //   .then((body) => {
-    //     const reader = body.getReader();
-    //     console.log(reader)
-    //   })
+    const res = await fetch('/chain', settings)
+    .then(function(response) {
+      const body = response.body
+      return body.getReader().read();
+    })
+    .then(function(arr) {
+      const newarr = arr['value']
 
-    //   .catch(console.log)
+      var string =  new TextDecoder().decode(newarr);
+      return string
+    })
+    console.log(res)
+    setResponse(res)
+
   };
+
   return (
     <div className="App">
       <header className="App-header">
