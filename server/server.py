@@ -1,6 +1,6 @@
 import os
 from flask_restful import Resource, reqparse, Api
-from flask import Flask, request, jsonify, session, stream_with_context, request, Response
+from flask import Flask, request, jsonify, session, stream_with_context, render_template, Response
 
 from langchain.chains import LLMChain
 from langchain.llms import OpenAI
@@ -14,8 +14,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    
-    return "<p>Hello, World!</p>"
+    return render_template('index.html')
 
 template = """You are a chatbot having a conversation with a human.
 
@@ -45,8 +44,8 @@ def chain_route():
     def generate():
         for chunk in llm_chain.run(user_input):
             yield chunk
-    #return stream_with_context(llm_chain.run(user_input))
-    return stream_with_context(generate())
+    return Response(generate(), mimetype='text/event-stream')
+    # return stream_with_context(generate())
 
 
 if __name__ == '__main__':
