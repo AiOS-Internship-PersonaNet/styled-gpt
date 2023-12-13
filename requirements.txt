@@ -1,0 +1,6 @@
+Flask
+openai
+langchain
+requests
+flask-cors
+flask_restful
