@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlaskGPT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #27496d; /* Faded dark blue background */
+        }
+
+        .container {
+            text-align: center;
+            width: 60%;
+            background-color: #142850; /* Dark blue background for the box */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            color: white; /* Text color changed to white for better visibility */
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff; /* Background color for input */
+            color: #000; /* Text color for input */
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .respuesta {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            height: 150px; /* Larger output box */
+            overflow-y: auto; /* Scrollbar for overflow */
+            background-color: #f0f8ff; /* Faded blue background for output box */
+            color: black; /* Black color for output text */
+            text-align: left; /* Align text to the left */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="pod-h2">QA Chatbot</h2>
+        <h3 class="pod-h3">Input box:</h3>
+        <section class="buscar">
+            <div class="search-container">
+                <form id="input-form" method="POST" class="d-flex">
+                    <input type="text" name="input_text" maxlength="500" class="d-flex">
+                    <button type="submit">Send</button>
+                </form>
+                <div class="respuesta">
+                    <div class="resp-grid-container">
+                        <div class="resp-grid">
+                            <div class="cajas">
+                                <nav>
+                                    <div class="et-p" id="result">
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        var searchForm = document.getElementById('input-form');
+        searchForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            let input = searchForm.elements.input_text.value;
+
+            try {
+                const body = {
+                    "query": input
+                };
+
+                const settings = {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                };
+                const res = await fetch('http://127.0.0.1:5000/stream', settings)
+                const reader = res.body.getReader();
+                document.getElementById("result").innerHTML = "";
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    const text = new TextDecoder().decode(value);
+                    document.getElementById("result").innerHTML += text;
+                }
+
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
