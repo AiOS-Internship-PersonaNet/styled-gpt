@@ -67,4 +67,4 @@ def handle_start_stream():
         emit('stream_data', {'data': chunk})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8000)
