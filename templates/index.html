@@ -19,7 +19,7 @@
 
         .container {
             text-align: center;
-            width: 60%;
+            width: 70%;
             background-color: #142850; /* Dark blue background for the box */
             padding: 20px;
             border-radius: 10px;
@@ -29,7 +29,7 @@
 
         input[type="text"] {
             width: 70%;
-            padding: 10px;
+            padding: 15px;
             margin-right: 10px;
             border-radius: 5px;
             border: 1px solid #ccc;
@@ -41,7 +41,7 @@
             padding: 10px 20px;
             border-radius: 5px;
             border: none;
-            background-color: #4CAF50;
+            background-color: #7daf4c;
             color: white;
             cursor: pointer;
         }
@@ -49,13 +49,20 @@
         button:hover {
             background-color: #45a049;
         }
+        .logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px; /* Adjust as needed */
+    height: auto; /* Maintains aspect ratio */
+}
 
         .respuesta {
             margin-top: 20px;
             border: 1px solid #ccc;
             padding: 10px;
             border-radius: 5px;
-            height: 150px; /* Larger output box */
+            height: 250px; /* Larger output box */
             overflow-y: auto; /* Scrollbar for overflow */
             background-color: #f0f8ff; /* Faded blue background for output box */
             color: black; /* Black color for output text */
@@ -65,6 +72,7 @@
 </head>
 
 <body>
+    <img src="https://i.ibb.co/hfgJ08R/afterflea-LOGO.png" alt="Logo" class="logo">
     <div class="container">
         <h2 class="pod-h2">QA Chatbot</h2>
         <h3 class="pod-h3">Input box:</h3>
