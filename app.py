@@ -30,7 +30,7 @@ prompt = PromptTemplate(
 memory = ConversationBufferMemory(memory_key="chat_history")
 
 handler = StdOutCallbackHandler()
-llm = OpenAI(openai_api_key="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", streaming=True, max_tokens=-1)
+llm = OpenAI(openai_api_key="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", streaming=True, max_tokens=-1)
 llm_chain = LLMChain(
     llm=llm,
     prompt=prompt,
