@@ -10,8 +10,9 @@ from langchain.callbacks import StdOutCallbackHandler
 from langchain.schema import SystemMessage
 
 from flask_socketio import SocketIO, emit
-
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app,origins=["*"])
 socketio = SocketIO(app)
 
 @app.route('/')
