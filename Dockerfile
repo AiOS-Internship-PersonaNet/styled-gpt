@@ -10,14 +10,14 @@ COPY requirements.txt .
 # Install the Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# If gunicorn is not in your requirements.txt, you can add this line to install it.
-RUN pip install gunicorn
-
 # Copy the application code to the container
 COPY . .
-
 # Expose the application port
-EXPOSE 5000
+EXPOSE 8000
+# Set the environment variables
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
 
+RUN export FLASK_APP=app.py
 # Run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+CMD ["python", "app.py"]
