@@ -4,3 +4,4 @@ langchain
 requests
 flask-cors
 flask_restful
+flask-socketio
